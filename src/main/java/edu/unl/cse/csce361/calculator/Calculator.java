@@ -6,7 +6,7 @@ import java.util.Arrays;
 
 public class Calculator {
     private static final int MAXIMUM_STACK_DEPTH = 100;
-    private static final int MAXIMUM_OPERATOR_LENGTH = 20;
+    private static final int MAXIMUM_OPERAND_LENGTH = 20;
     private static final char NUMBER = '0';
     private static final char DONE = 'q';
     private static final char OPERAND_TOO_LONG = '9';
@@ -27,59 +27,74 @@ public class Calculator {
 
     private void run() throws IOException {
         int type;
-        char[] s = new char[MAXIMUM_OPERATOR_LENGTH];
-        double number1, number2;
+        char[] operand = new char[MAXIMUM_OPERAND_LENGTH];
+        String message;
 
-        type = token(s, MAXIMUM_OPERATOR_LENGTH);
+        type = getToken(operand, MAXIMUM_OPERAND_LENGTH);
         while (type != DONE) {
-            switch (type) {
-                case NUMBER:
-                    number1 = Double.parseDouble(new String(s));
-                    push(number1);
-                    break;
-                case '+':
-                    number1 = pop();
-                    number2 = pop();
-                    push(number1 + number2);
-                    break;
-                case '*':
-                    number1 = pop();
-                    number2 = pop();
-                    push(number1 * number2);
-                    break;
-                case '-':
-                    number1 = pop();
-                    number2 = pop();
-                    push(number2 - number1);
-                    break;
-                case '/':
-                    number1 = pop();
-                    if (number1 != 0.0) {
-                        number2 = pop();
-                        push(number2 / number1);
-                    } else {
-                        System.out.println("zero divisor popped");
-                    }
-                    break;
-                case '=':
-                    number1 = pop();
-                    System.out.println("\t" + number1);
-                    push(number1);
-                    break;
-                case 'c':
-                    clear();
-                    break;
-                case OPERAND_TOO_LONG:
-                    System.out.println(new String(Arrays.copyOfRange(s, 0, MAXIMUM_OPERATOR_LENGTH - 1)) + "... is too long");
-                    break;
-                default:
-                    System.out.println("unknown command " + (char)type);
-                    break;
-
+            message = calculate(type, operand);
+            if (message != null) {
+                System.out.println(message);
             }
-
-            type = token(s, MAXIMUM_OPERATOR_LENGTH);
+            type = getToken(operand, MAXIMUM_OPERAND_LENGTH);
         }
+    }
+
+    private String calculate(int type, char[] operand) {
+        double number1;
+        double number2;
+        String message;
+        switch (type) {
+            case NUMBER:
+                number1 = Double.parseDouble(new String(operand));
+                push(number1);
+                message = null;
+                break;
+            case '+':
+                number1 = pop();
+                number2 = pop();
+                push(number1 + number2);
+                message = null;
+                break;
+            case '*':
+                number1 = pop();
+                number2 = pop();
+                push(number1 * number2);
+                message = null;
+                break;
+            case '-':
+                number1 = pop();
+                number2 = pop();
+                push(number2 - number1);
+                message = null;
+                break;
+            case '/':
+                number1 = pop();
+                if (number1 != 0.0) {
+                    number2 = pop();
+                    push(number2 / number1);
+                    message = null;
+                } else {
+                    message = "zero divisor popped";
+                }
+                break;
+            case '=':
+                number1 = pop();
+                message = "\t" + number1;
+                push(number1);
+                break;
+            case 'c':
+                clear();
+                message = null;
+                break;
+            case OPERAND_TOO_LONG:
+                message = new String(Arrays.copyOfRange(operand, 0, MAXIMUM_OPERAND_LENGTH - 1)) + "... is too long";
+                break;
+            default:
+                message = "unknown command " + (char)type;
+                break;
+        }
+        return message;
     }
 
     private void push(double operand) {
@@ -109,7 +124,7 @@ public class Calculator {
     }
 
     @SuppressWarnings("SameParameterValue")
-    private int token(char[] string, int limit) throws IOException {
+    private int getToken(char[] operand, int limit) throws IOException {
         int index, c, returnValue;
 
         c = stdin.read();
@@ -120,27 +135,26 @@ public class Calculator {
         if (c != '.' && (c < '0' || c > '9')) {
             returnValue = c;
         } else {
-            string[0] = (char)c;
+            operand[0] = (char)c;
 
             c = stdin.read();
             index = 1;
             while (c >= '0' && c <= '9') {
                 if (index < limit) {
-                    string[index] = (char)c;
+                    operand[index] = (char)c;
                 }
                 c = stdin.read();
                 index++;
             }
-
             if (c == '.') {
                 if (index < limit) {
-                    string[index] = (char)c;
+                    operand[index] = (char)c;
                 }
                 index++;
                 c = stdin.read();
                 while (c >= '0' && c <= '9') {
                     if (index < limit) {
-                        string[index] = (char)c;
+                        operand[index] = (char)c;
                     }
                     index++;
                     c = stdin.read();
@@ -150,7 +164,7 @@ public class Calculator {
             if (index < limit) {
                 stdin.unread(c);
                 while(index < limit) {          // to mimic the C-like behavior, we need to pump NULs into the string
-                    string[index] = '\0';       // otherwise, Double.parseDouble(new String(operand)) will crash if
+                    operand[index] = '\0';      // otherwise, Double.parseDouble(new String(operand)) will crash if
                     index++;                    // if there are non-NUL characters after the first NUL
                 }
                 returnValue = NUMBER;
@@ -158,11 +172,10 @@ public class Calculator {
                 while (c != '\n' && c != DONE) {
                     c = stdin.read();
                 }
-                string[limit - 1] = '\0';       // leave this here, intentionally, as a vestigial of C strings
+                operand[limit - 1] = '\0';      // leave this here, intentionally, as a vestigial of C strings
                 returnValue = OPERAND_TOO_LONG;
             }
         }
-
         return returnValue;
     }
 }
