@@ -5,113 +5,112 @@ import java.io.PushbackInputStream;
 import java.util.Arrays;
 
 public class Calculator {
-    private static final int MAXVAL = 100;
-    private static final int MAXOP = 20;
+    private static final int MAXIMUM_STACK_DEPTH = 100;
+    private static final int MAXIMUM_OPERATOR_LENGTH = 20;
     private static final char NUMBER = '0';
     private static final char DONE = 'q';
-    private static final char TOOBIG = '9';
+    private static final char OPERAND_TOO_LONG = '9';
 
     private static PushbackInputStream stdin = new PushbackInputStream(System.in);
 
-    private static int sp = 0;
-    private static double[] val = new double[MAXVAL];
+    private int stackPointer;
+    private double[] stack;
+
+    private Calculator() {
+        stackPointer = 0;
+        stack = new double[MAXIMUM_STACK_DEPTH];
+    }
 
     public static void main(String[] args) throws IOException {
-        new Calculator();                     // to get EclEmma to see 100% statement coverage in Summer'19 whitebox testing
-        int type;
-        char[] s = new char[MAXOP];
-        double num1, num2;
+        new Calculator().run();
+    }
 
-        type = getop(s, MAXOP);
+    private void run() throws IOException {
+        int type;
+        char[] s = new char[MAXIMUM_OPERATOR_LENGTH];
+        double number1, number2;
+
+        type = token(s, MAXIMUM_OPERATOR_LENGTH);
         while (type != DONE) {
             switch (type) {
-
                 case NUMBER:
-                    num1 = Double.parseDouble(new String(s));
-                    push(num1);
+                    number1 = Double.parseDouble(new String(s));
+                    push(number1);
                     break;
                 case '+':
-                    num1 = pop();
-                    num2 = pop();
-                    push(num1 + num2);
+                    number1 = pop();
+                    number2 = pop();
+                    push(number1 + number2);
                     break;
-
                 case '*':
-                    num1 = pop();
-                    num2 = pop();
-                    push(num1 * num2);
+                    number1 = pop();
+                    number2 = pop();
+                    push(number1 * number2);
                     break;
-
                 case '-':
-                    num1 = pop();
-                    num2 = pop();
-                    push(num2 - num1);
+                    number1 = pop();
+                    number2 = pop();
+                    push(number2 - number1);
                     break;
-
                 case '/':
-                    num1 = pop();
-                    if (num1 != 0.0) {
-                        num2 = pop();
-                        push(num2 / num1);
+                    number1 = pop();
+                    if (number1 != 0.0) {
+                        number2 = pop();
+                        push(number2 / number1);
                     } else {
                         System.out.println("zero divisor popped");
                     }
                     break;
-
                 case '=':
-                    num1 = pop();
-                    System.out.println("\t" + num1);
-                    push(num1);
+                    number1 = pop();
+                    System.out.println("\t" + number1);
+                    push(number1);
                     break;
-
                 case 'c':
                     clear();
                     break;
-
-                case TOOBIG:
-//                    printf("%.20s ... is too long\n",s);
-                    System.out.println(new String(Arrays.copyOfRange(s, 0, MAXOP - 1)) + "... is too long");
+                case OPERAND_TOO_LONG:
+                    System.out.println(new String(Arrays.copyOfRange(s, 0, MAXIMUM_OPERATOR_LENGTH - 1)) + "... is too long");
                     break;
-
                 default:
-                    System.out.println("unknown command " + (char) type);
+                    System.out.println("unknown command " + (char)type);
                     break;
 
             }
 
-            type = getop(s, MAXOP);
+            type = token(s, MAXIMUM_OPERATOR_LENGTH);
         }
     }
 
-    private static void push(double f) {
-        if (sp < MAXVAL) {
-            val[sp++] = f;
+    private void push(double operand) {
+        if (stackPointer < MAXIMUM_STACK_DEPTH) {
+            stack[stackPointer++] = operand;
         } else {
             System.out.println("error: stack full");
             clear();
         }
     }
 
-    private static double pop() {
-        double retval;
+    private double pop() {
+        double operand;
 
-        if (sp > 0) {
-            retval = val[--sp];
+        if (stackPointer > 0) {
+            operand = stack[--stackPointer];
         } else {
             System.out.println("error: stack empty");
             clear();
-            retval = 0;
+            operand = 0;
         }
-        return (retval);
+        return operand;
     }
 
-    private static void clear() {
-        sp = 0;
+    private void clear() {
+        stackPointer = 0;
     }
 
     @SuppressWarnings("SameParameterValue")
-    private static int getop(char[] s, int lim) throws IOException {
-        int i, c, retval;
+    private int token(char[] string, int limit) throws IOException {
+        int index, c, returnValue;
 
         c = stdin.read();
         while (c == ' ' || c == '\t' || c == '\n') {
@@ -119,48 +118,48 @@ public class Calculator {
         }
 
         if (c != '.' && (c < '0' || c > '9')) {
-            retval = c;
+            returnValue = c;
         } else {
-            s[0] = (char) c;
+            string[0] = (char)c;
 
             c = stdin.read();
-            i = 1;
+            index = 1;
             while (c >= '0' && c <= '9') {
-                if (i < lim) {
-                    s[i] = (char) c;
+                if (index < limit) {
+                    string[index] = (char)c;
                 }
                 c = stdin.read();
-                i++;
+                index++;
             }
 
             if (c == '.') {
-                if (i < lim) {
-                    s[i] = (char) c;
+                if (index < limit) {
+                    string[index] = (char)c;
                 }
-                i++;
+                index++;
                 c = stdin.read();
                 while (c >= '0' && c <= '9') {
-                    if (i < lim) {
-                        s[i] = (char) c;
+                    if (index < limit) {
+                        string[index] = (char)c;
                     }
-                    i++;
+                    index++;
                     c = stdin.read();
                 }
             }
 
-            if (i < lim) {
+            if (index < limit) {
                 stdin.unread(c);
-                s[i] = '\0';
-                retval = NUMBER;
+                string[index] = '\0';
+                returnValue = NUMBER;
             } else {
                 while (c != '\n' && c != DONE) {
                     c = stdin.read();
                 }
-                s[lim - 1] = '\0';            // leave this here, intentionally, as a vestigial of C strings
-                retval = TOOBIG;
+                string[limit - 1] = '\0';            // leave this here, intentionally, as a vestigial of C strings
+                returnValue = OPERAND_TOO_LONG;
             }
         }
 
-        return retval;
+        return returnValue;
     }
 }
