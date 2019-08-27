@@ -149,13 +149,16 @@ public class Calculator {
 
             if (index < limit) {
                 stdin.unread(c);
-                string[index] = '\0';
+                while(index < limit) {          // to mimic the C-like behavior, we need to pump NULs into the string
+                    string[index] = '\0';       // otherwise, Double.parseDouble(new String(operand)) will crash if
+                    index++;                    // if there are non-NUL characters after the first NUL
+                }
                 returnValue = NUMBER;
             } else {
                 while (c != '\n' && c != DONE) {
                     c = stdin.read();
                 }
-                string[limit - 1] = '\0';            // leave this here, intentionally, as a vestigial of C strings
+                string[limit - 1] = '\0';       // leave this here, intentionally, as a vestigial of C strings
                 returnValue = OPERAND_TOO_LONG;
             }
         }
