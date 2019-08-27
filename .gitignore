@@ -1,0 +1,34 @@
+# Project-specific
+# none (for now)
+
+# Mac file finder metadata
+.DS_Store
+
+# Java files
+*.class
+
+# Emacs backup file
+*~
+
+# JetBrains (IntelliJ IDEA, PyCharm, etc) files
+.idea/
+out/
+*.iml
+*.iws
+*.ipr
+
+# Eclipse files
+bin/
+.settings/
+.classpath
+.project
+
+# Maven
+target/
+
+# Miscellaneous
+tmp/
+*.tmp
+*.bak
+*.swp
+
