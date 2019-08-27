@@ -6,7 +6,7 @@ import java.util.Arrays;
 
 public class Calculator {
     private static final int MAXIMUM_STACK_DEPTH = 100;
-    private static final int MAXIMUM_OPERAND_LENGTH = 20;
+    private static final int MAXIMUM_TOKEN_LENGTH = 20;
     private static final char NUMBER = '0';
     private static final char DONE = 'q';
     private static final char OPERAND_TOO_LONG = '9';
@@ -16,7 +16,7 @@ public class Calculator {
     private int stackPointer;
     private double[] stack;
 
-    private Calculator() {
+    public Calculator() {
         stackPointer = 0;
         stack = new double[MAXIMUM_STACK_DEPTH];
     }
@@ -25,28 +25,28 @@ public class Calculator {
         new Calculator().run();
     }
 
-    private void run() throws IOException {
+    void run() throws IOException {
         int type;
-        char[] operand = new char[MAXIMUM_OPERAND_LENGTH];
+        char[] token = new char[MAXIMUM_TOKEN_LENGTH];
         String message;
 
-        type = getToken(operand, MAXIMUM_OPERAND_LENGTH);
+        type = getToken(token, MAXIMUM_TOKEN_LENGTH);
         while (type != DONE) {
-            message = calculate(type, operand);
+            message = calculate(type, token);
             if (message != null) {
                 System.out.println(message);
             }
-            type = getToken(operand, MAXIMUM_OPERAND_LENGTH);
+            type = getToken(token, MAXIMUM_TOKEN_LENGTH);
         }
     }
 
-    private String calculate(int type, char[] operand) {
+    String calculate(int type, char[] token) {
         double number1;
         double number2;
         String message;
         switch (type) {
             case NUMBER:
-                number1 = Double.parseDouble(new String(operand));
+                number1 = Double.parseDouble(new String(token));
                 push(number1);
                 message = null;
                 break;
@@ -88,7 +88,7 @@ public class Calculator {
                 message = null;
                 break;
             case OPERAND_TOO_LONG:
-                message = new String(Arrays.copyOfRange(operand, 0, MAXIMUM_OPERAND_LENGTH - 1)) + "... is too long";
+                message = new String(Arrays.copyOfRange(token, 0, MAXIMUM_TOKEN_LENGTH - 1)) + "... is too long";
                 break;
             default:
                 message = "unknown command " + (char)type;
@@ -97,9 +97,9 @@ public class Calculator {
         return message;
     }
 
-    private void push(double operand) {
+    private void push(double number) {
         if (stackPointer < MAXIMUM_STACK_DEPTH) {
-            stack[stackPointer++] = operand;
+            stack[stackPointer++] = number;
         } else {
             System.out.println("error: stack full");
             clear();
@@ -107,16 +107,16 @@ public class Calculator {
     }
 
     private double pop() {
-        double operand;
+        double number;
 
         if (stackPointer > 0) {
-            operand = stack[--stackPointer];
+            number = stack[--stackPointer];
         } else {
             System.out.println("error: stack empty");
             clear();
-            operand = 0;
+            number = 0;
         }
-        return operand;
+        return number;
     }
 
     private void clear() {
@@ -124,8 +124,8 @@ public class Calculator {
     }
 
     @SuppressWarnings("SameParameterValue")
-    private int getToken(char[] operand, int limit) throws IOException {
-        int index, c, returnValue;
+    private int getToken(char[] token, int limit) throws IOException {
+        int index, c, tokenType;
 
         c = stdin.read();
         while (c == ' ' || c == '\t' || c == '\n') {
@@ -133,28 +133,28 @@ public class Calculator {
         }
 
         if (c != '.' && (c < '0' || c > '9')) {
-            returnValue = c;
+            tokenType = c;
         } else {
-            operand[0] = (char)c;
+            token[0] = (char)c;
 
             c = stdin.read();
             index = 1;
             while (c >= '0' && c <= '9') {
                 if (index < limit) {
-                    operand[index] = (char)c;
+                    token[index] = (char)c;
                 }
                 c = stdin.read();
                 index++;
             }
             if (c == '.') {
                 if (index < limit) {
-                    operand[index] = (char)c;
+                    token[index] = (char)c;
                 }
                 index++;
                 c = stdin.read();
                 while (c >= '0' && c <= '9') {
                     if (index < limit) {
-                        operand[index] = (char)c;
+                        token[index] = (char)c;
                     }
                     index++;
                     c = stdin.read();
@@ -164,18 +164,18 @@ public class Calculator {
             if (index < limit) {
                 stdin.unread(c);
                 while(index < limit) {          // to mimic the C-like behavior, we need to pump NULs into the string
-                    operand[index] = '\0';      // otherwise, Double.parseDouble(new String(operand)) will crash if
+                    token[index] = '\0';        // otherwise, Double.parseDouble(new String(token)) will crash if
                     index++;                    // if there are non-NUL characters after the first NUL
                 }
-                returnValue = NUMBER;
+                tokenType = NUMBER;
             } else {
                 while (c != '\n' && c != DONE) {
                     c = stdin.read();
                 }
-                operand[limit - 1] = '\0';      // leave this here, intentionally, as a vestigial of C strings
-                returnValue = OPERAND_TOO_LONG;
+                token[limit - 1] = '\0';      // leave this here, intentionally, as a vestigial of C strings
+                tokenType = OPERAND_TOO_LONG;
             }
         }
-        return returnValue;
+        return tokenType;
     }
 }
