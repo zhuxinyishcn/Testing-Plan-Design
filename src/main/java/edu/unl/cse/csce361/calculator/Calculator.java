@@ -5,11 +5,11 @@ import java.io.PushbackInputStream;
 import java.util.Arrays;
 
 public class Calculator {
-    private static final int MAXIMUM_STACK_DEPTH = 100;
-    private static final int MAXIMUM_TOKEN_LENGTH = 20;
-    private static final char NUMBER = '0';
-    private static final char DONE = 'q';
-    private static final char OPERAND_TOO_LONG = '9';
+    public static final int MAXIMUM_STACK_DEPTH = 100;
+    public static final int MAXIMUM_TOKEN_LENGTH = 20;
+    public static final char NUMBER = '0';
+    public static final char DONE = 'q';
+    public static final char OPERAND_TOO_LONG = '9';
 
     private static PushbackInputStream stdin = new PushbackInputStream(System.in);
 
