@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?><testrun name="CalculatorTest" project="calculator" tests="23" started="23" failures="0" errors="0" ignored="0">
+  <testsuite name="edu.unl.cse.csce361.calculator.CalculatorTest" time="0.022">
+    <testcase name="testDoubleDivideNonZero" classname="edu.unl.cse.csce361.calculator.CalculatorTest" time="0.0"/>
+    <testcase name="testDoubleMultiplication" classname="edu.unl.cse.csce361.calculator.CalculatorTest" time="0.0"/>
+    <testcase name="testIntegerDivideZero" classname="edu.unl.cse.csce361.calculator.CalculatorTest" time="0.0"/>
+    <testcase name="fakeInputOutputDemonstration" classname="edu.unl.cse.csce361.calculator.CalculatorTest" time="0.016"/>
+    <testcase name="testUnknownCommand" classname="edu.unl.cse.csce361.calculator.CalculatorTest" time="0.0"/>
+    <testcase name="testEqualForDouble" classname="edu.unl.cse.csce361.calculator.CalculatorTest" time="0.0"/>
+    <testcase name="testClear" classname="edu.unl.cse.csce361.calculator.CalculatorTest" time="0.0"/>
+    <testcase name="testIntegerDivideNonZero" classname="edu.unl.cse.csce361.calculator.CalculatorTest" time="0.001"/>
+    <testcase name="testIntegerMultiplication" classname="edu.unl.cse.csce361.calculator.CalculatorTest" time="0.0"/>
+    <testcase name="testIntegerSubtraction" classname="edu.unl.cse.csce361.calculator.CalculatorTest" time="0.0"/>
+    <testcase name="testDoubleSubtraction" classname="edu.unl.cse.csce361.calculator.CalculatorTest" time="0.0"/>
+    <testcase name="testTooFewCharValues" classname="edu.unl.cse.csce361.calculator.CalculatorTest" time="0.001"/>
+    <testcase name="testDoublePlus" classname="edu.unl.cse.csce361.calculator.CalculatorTest" time="0.0"/>
+    <testcase name="testIntegerPlus" classname="edu.unl.cse.csce361.calculator.CalculatorTest" time="0.0"/>
+    <testcase name="testEqualForInteger" classname="edu.unl.cse.csce361.calculator.CalculatorTest" time="0.0"/>
+    <testcase name="testTooFewIntegerValues" classname="edu.unl.cse.csce361.calculator.CalculatorTest" time="0.002"/>
+    <testcase name="testTooFewDoubleValues" classname="edu.unl.cse.csce361.calculator.CalculatorTest" time="0.0"/>
+    <testcase name="testDoubleDivideZero" classname="edu.unl.cse.csce361.calculator.CalculatorTest" time="0.0"/>
+    <testcase name="testTooLongNumbers" classname="edu.unl.cse.csce361.calculator.CalculatorTest" time="0.0"/>
+    <testcase name="testTypeDouble" classname="edu.unl.cse.csce361.calculator.CalculatorTest" time="0.0"/>
+    <testcase name="testNotNumber" classname="edu.unl.cse.csce361.calculator.CalculatorTest" time="0.001"/>
+    <testcase name="testTypeInteger" classname="edu.unl.cse.csce361.calculator.CalculatorTest" time="0.0"/>
+    <testcase name="testPopEmptyStack" classname="edu.unl.cse.csce361.calculator.CalculatorTest" time="0.001"/>
+  </testsuite>
+</testrun>
