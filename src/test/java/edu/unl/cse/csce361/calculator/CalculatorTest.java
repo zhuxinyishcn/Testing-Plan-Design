@@ -6,6 +6,7 @@ import org.junit.Test;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.PrintStream;
 import java.util.Arrays;
@@ -506,5 +507,119 @@ public class CalculatorTest {
 		String programOutput = calculator.calculate(Calculator.NUMBER, token);
 		assertEquals(output, fakeOut.toString());
 		assertEquals(message, programOutput);
+	}
+
+	/*
+	 * 9. Test whether the loop terminates when the user types "q"
+	 */
+	@Test(timeout = 500)
+	public void testQuit() throws IOException {
+		setFakeIn(Character.toString(Calculator.DONE));
+		Scanner scanner = new Scanner(System.in);
+		calculator.run();
+		scanner.close();
+	}
+
+	/*
+	 * 10.1 test getToken function can correctly notice the "\t"
+	 */
+	@Test
+	public void testTab() throws IOException {
+		setFakeIn("23\t89\t+\t=\tq");
+		Scanner scanner = new Scanner(System.in);
+		calculator.run();
+		scanner.close();
+		assertEquals("\t" + Double.toString(23 + 89) + lineSeparator, fakeOut.toString());
+	}
+
+	/*
+	 * 10.2 test getToken function can correctly notice the "\n"
+	 */
+	@Test
+	public void testLineChange() throws IOException {
+		setFakeIn("23\n89\n+\n=\nq");
+		Scanner scanner = new Scanner(System.in);
+		calculator.run();
+		scanner.close();
+		assertEquals("\t" + Double.toString(23 + 89) + lineSeparator, fakeOut.toString());
+	}
+
+	/*
+	 * 10.3 test getToken function can correctly notice the " "
+	 */
+	@Test
+	public void testSpace() throws IOException {
+		setFakeIn("23 89 + = q");
+		Scanner scanner = new Scanner(System.in);
+		calculator.run();
+		scanner.close();
+		assertEquals("\t" + Double.toString(23 + 89) + lineSeparator, fakeOut.toString());
+	}
+
+	/*
+	 * 11. test getToken function can correctly notice the token is too long for
+	 * integer
+	 */
+	@Test
+	public void testExcelLimitsInteger() throws IOException {
+		setFakeIn("8753984759834743789724 2 * = \n q");
+		Scanner scanner = new Scanner(System.in);
+		calculator.run();
+		scanner.close();
+		assertEquals(new String(
+				Arrays.copyOfRange("8753984759834743789".toCharArray(), 0, Calculator.MAXIMUM_TOKEN_LENGTH - 1))
+				+ "... is too long" + lineSeparator, fakeOut.toString());
+	}
+
+	/*
+	 * 12. test getToken function can correctly notice the token is too long for
+	 * Double
+	 */
+	@Test
+	public void testExcelLimitsDouble() throws IOException {
+		setFakeIn("1.12875398475983474324 2 * = \n q");
+		Scanner scanner = new Scanner(System.in);
+		calculator.run();
+		scanner.close();
+		assertEquals(new String(
+				Arrays.copyOfRange("1.12875398475983474".toCharArray(), 0, Calculator.MAXIMUM_TOKEN_LENGTH - 1))
+				+ "... is too long" + lineSeparator, fakeOut.toString());
+	}
+
+	/*
+	 * 13. test getToken function can correctly notice the token is too long for
+	 * double with "\n"
+	 */
+	@Test
+	public void testNumberLineChange() throws IOException {
+		setFakeIn("1.12875398475983474324234234 2 * = \n ");
+		Scanner scanner = new Scanner(System.in);
+		calculator.run();
+		scanner.close();
+		assertEquals("\t" + Double.toString(1.12 * 2) + lineSeparator, fakeOut.toString());
+	}
+
+	/*
+	 * 14 test getToken function can correctly parsing two normal double
+	 */
+	@Test
+	public void testNormalDouble() throws IOException {
+		setFakeIn("1243.3 2 + = q");
+		Scanner scanner = new Scanner(System.in);
+		calculator.run();
+		scanner.close();
+		assertEquals("\t" + Double.toString(2.3 + 89) + lineSeparator, fakeOut.toString());
+	}
+
+	/*
+	 * 15 test to check if main function can correctly work
+	 */
+	@Test
+	public void testMain() throws IOException {
+		setFakeIn("1.2 89 + = q");
+		Scanner scanner = new Scanner(System.in);
+		Calculator.main(null);
+		scanner.close();
+		assertEquals("\t" + Double.toString(1.2 + 89) + lineSeparator, fakeOut.toString());
 	}
 }
