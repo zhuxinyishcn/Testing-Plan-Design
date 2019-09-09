@@ -587,12 +587,13 @@ public class CalculatorTest {
 	}
 
 	/*
-	 * 13. test getToken function can correctly notice the token is too long for
-	 * double with "\n"
+	 * 13. test getToken function can correctly parsing a 20+ long number which end
+	 * with "."
 	 */
+//	@Test(timeout = 500)
 	@Test
-	public void testNumberLineChange() throws IOException {
-		setFakeIn("1.12875398475983474324234234 2 * = \n ");
+	public void testLongNumberWithDot() throws IOException {
+		setFakeIn("1128753984759847430322. 2 * = q");
 		Scanner scanner = new Scanner(System.in);
 		calculator.run();
 		scanner.close();
@@ -600,15 +601,16 @@ public class CalculatorTest {
 	}
 
 	/*
-	 * 14 test getToken function can correctly parsing two normal double
+	 * 14 test getToken function can correctly parsing a incorrect that a double
+	 * number has two "."
 	 */
 	@Test
-	public void testNormalDouble() throws IOException {
-		setFakeIn("1243.3 2 + = q");
+	public void testDoubleDot() throws IOException {
+		setFakeIn("1.243.3 2 + = \n q");
 		Scanner scanner = new Scanner(System.in);
 		calculator.run();
 		scanner.close();
-		assertEquals("\t" + Double.toString(2.3 + 89) + lineSeparator, fakeOut.toString());
+		assertEquals("\t" + Double.toString(2.3) + lineSeparator, fakeOut.toString());
 	}
 
 	/*
@@ -621,5 +623,31 @@ public class CalculatorTest {
 		Calculator.main(null);
 		scanner.close();
 		assertEquals("\t" + Double.toString(1.2 + 89) + lineSeparator, fakeOut.toString());
+	}
+
+	/*
+	 * 16 test to getToken function can correctly parsing a incorrect number that a
+	 * Integer number contains a character
+	 */
+	@Test
+	public void testIntegerWithChar() throws IOException {
+		setFakeIn("123c4567890 2 + = q");
+		Scanner scanner = new Scanner(System.in);
+		calculator.run();
+		scanner.close();
+		assertEquals("\t" + Double.toString(4567890 + 2) + lineSeparator, fakeOut.toString());
+	}
+
+	/*
+	 * 17 test to getToken function can correctly parsing a incorrect number that a
+	 * Double number contains a character
+	 */
+	@Test
+	public void testDoubleWithChar() throws IOException {
+		setFakeIn("12.3c4567890 2 + = q");
+		Scanner scanner = new Scanner(System.in);
+		calculator.run();
+		scanner.close();
+		assertEquals("\t" + Double.toString(4567890 + 2) + lineSeparator, fakeOut.toString());
 	}
 }
