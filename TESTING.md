@@ -179,3 +179,99 @@ None needed
 | 100+  char| `NumberFormatException`    | 
 ### TESTING REQUIREMENTS COVERED
 1, 8
+
+# CSCE -361 -  Whitebox Testing - Pair
+Name as it appears on Canvas: __Xinyi Zhu,__ __Cody Berglund__
+GitLab User ID: __1584__  
+## `WhiteBox`  Test Requirement
+`100%` statement coverage on this calculator class
+### Test 9
+### PURPOSE
+
+Test invocation of the `calculate` class,  test whether the loop terminates when the user types "q"
+### SETUP
+
+None needed
+
+### INPUTS and EXPECTED OUTPUTS
+| input |expected output |
+| :-- |:---------------:| 
+| `q` | The program terminates   |  
+### Test 10
+### PURPOSE
+
+Test invocation of the `calculate` class,  test getToken function can correctly notice the whitespace, tab, and line change
+### SETUP
+
+None needed
+
+### INPUTS and EXPECTED OUTPUTS
+| input |expected output |
+| :-- |:---------------:| 
+| `23\t89\t+\t=\tq` | The program correctly accept the inputs| 
+| `23\n89\n+\n=\nq23\n89\n+\n=\nq` | The program correctly accept the inputs   | 
+| `23 89 + = q` | The program correctly accept the inputs   | 
+### Test 11
+### PURPOSE
+
+Test invocation of the `calculate` class, getToken function can correctly notice the token is too long for integer and double number
+### SETUP
+
+None needed
+
+### INPUTS and EXPECTED OUTPUTS
+| input |expected output |
+| :-- |:---------------:| 
+| `8753984759834743789724 2 * = \n q` | 8753984759834743789... is too long | 
+| `1.12875398475983474324 2 * = \n q` | 1.12875398475983474... is too long   
+### Test 12
+### PURPOSE
+
+Test invocation of the `calculate` class, test getToken function can correctly parsing a 20+ long number which end with `.`,  and test getToken function can correctly parsing a incorrect that a double number has two `.`
+### SETUP
+
+None needed
+
+### INPUTS and EXPECTED OUTPUTS
+| input |expected output |
+| :-- |:---------------:| 
+| `1128753984759847430322. 2 * = q` | `None` | 
+| `1.243.3 2 + = \n q` |    `None`
+### Test 14
+### PURPOSE
+
+Test invocation of the `main` class, test if the main is correctly perform itself 
+### SETUP
+
+None needed
+
+### INPUTS and EXPECTED OUTPUTS
+| input |expected output |
+| :-- |:---------------:| 
+| `None` | `None` | 
+### Test 15
+### PURPOSE
+
+Test invocation of the `main` class, test if the main is correctly perform itself 
+### SETUP
+
+None needed
+
+### INPUTS and EXPECTED OUTPUTS
+| input |expected output |
+| :-- |:---------------:| 
+| `None` | `None` | 
+### Test 16
+### PURPOSE
+
+Test invocation of the `calculate` class,  test if getToken function can correctly parsing a incorrect number that a Integer number contains a character and 
+### SETUP
+
+None needed
+
+### INPUTS and EXPECTED OUTPUTS
+| input |expected output |
+| :-- |:---------------:| 
+| `123c4567890 2 + = q` | `None` | 
+| `12.3c4567890 2 + = q` | `None` | 
+
