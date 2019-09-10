@@ -181,8 +181,8 @@ None needed
 1, 8
 
 # CSCE -361 -  Whitebox Testing - Pair
-Name as it appears on Canvas: __Xinyi Zhu,__ __Cody Berglund__
-GitLab User ID: __1584__  
+Name as it appears on Canvas: __Xinyi Zhu,__ __Cody Berglund__  
+GitLab User ID: __1584, 1603__ 
 ## `WhiteBox`  Test Requirement
 `100%` statement coverage on this calculator class
 ### Test 9
@@ -265,6 +265,7 @@ None needed
 ### PURPOSE
 
 Test invocation of the `calculate` class,  test if getToken function can correctly parsing a incorrect number that a Integer number contains a character and 
+a double number contains a character
 ### SETUP
 
 None needed
