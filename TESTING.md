@@ -240,7 +240,7 @@ None needed
 ### Test 14
 ### PURPOSE
 
-Test invocation of the `main` class, test if the main is correctly perform itself 
+Test invocation of the `main` class, test if the main function correctly executes when called 
 ### SETUP
 
 None needed
@@ -252,7 +252,7 @@ None needed
 ### Test 15
 ### PURPOSE
 
-Test invocation of the `main` class, test if the main is correctly perform itself 
+Test invocation of the `main` class, test if the main function correctly executes when called
 ### SETUP
 
 None needed
@@ -264,7 +264,7 @@ None needed
 ### Test 16
 ### PURPOSE
 
-Test invocation of the `calculate` class,  test if getToken function can correctly parsing a incorrect number that a Integer number contains a character and 
+Test invocation of the `calculate` class,  test if getToken function can correctly parse a incorrect number that a Integer number contains a character and 
 ### SETUP
 
 None needed
