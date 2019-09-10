@@ -557,7 +557,7 @@ public class CalculatorTest {
 	}
 
 	/*
-	 * 11. test getToken function can correctly notice the token is too long for
+	 * 11.1 test getToken function can correctly notice the token is too long for
 	 * integer
 	 */
 	@Test
@@ -572,7 +572,7 @@ public class CalculatorTest {
 	}
 
 	/*
-	 * 12. test getToken function can correctly notice the token is too long for
+	 * 11.2 test getToken function can correctly notice the token is too long for
 	 * Double
 	 */
 	@Test
@@ -587,7 +587,7 @@ public class CalculatorTest {
 	}
 
 	/*
-	 * 13. test getToken function can correctly parsing a 20+ long number which end
+	 * 12.1 test getToken function can correctly parsing a 20+ long number which end
 	 * with "."
 	 */
 	@Test
@@ -600,7 +600,7 @@ public class CalculatorTest {
 	}
 
 	/*
-	 * 14 test getToken function can correctly parsing a incorrect that a double
+	 * 12.2 test getToken function can correctly parsing a incorrect that a double
 	 * number has two "."
 	 */
 	@Test
@@ -613,7 +613,7 @@ public class CalculatorTest {
 	}
 
 	/*
-	 * 15 test to check if main function can correctly work
+	 * 13. test to check if main function can correctly work
 	 */
 	@Test
 	public void testMain() throws IOException {
@@ -625,7 +625,7 @@ public class CalculatorTest {
 	}
 
 	/*
-	 * 16 test to getToken function can correctly parsing a incorrect number that a
+	 * 14.1 test to getToken function can correctly parsing a incorrect number that a
 	 * Integer number contains a character
 	 */
 	@Test
@@ -638,7 +638,7 @@ public class CalculatorTest {
 	}
 
 	/*
-	 * 17 test to getToken function can correctly parsing a incorrect number that a
+	 * 14.2 test to getToken function can correctly parsing a incorrect number that a
 	 * Double number contains a character
 	 */
 	@Test

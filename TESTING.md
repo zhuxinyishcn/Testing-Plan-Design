@@ -237,7 +237,7 @@ None needed
 | :-- |:---------------:| 
 | `1128753984759847430322. 2 * = q` | `None` | 
 | `1.243.3 2 + = \n q` |    `None`
-### Test 14
+### Test 13
 ### PURPOSE
 
 Test invocation of the `main` class, test if the main function correctly executes when called 
@@ -249,22 +249,11 @@ None needed
 | input |expected output |
 | :-- |:---------------:| 
 | `None` | `None` | 
-### Test 15
+
+### Test 14
 ### PURPOSE
 
-Test invocation of the `main` class, test if the main function correctly executes when called
-### SETUP
-
-None needed
-
-### INPUTS and EXPECTED OUTPUTS
-| input |expected output |
-| :-- |:---------------:| 
-| `None` | `None` | 
-### Test 16
-### PURPOSE
-
-Test invocation of the `calculate` class,  test if getToken function can correctly parse an incorrect string that contains integers and characters 
+Test invocation of the `calculate` class,  test if getToken function can correctly parse an incorrect string that contains integers or double and characters 
 ### SETUP
 
 None needed
