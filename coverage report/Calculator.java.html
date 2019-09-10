@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../jacoco-resources/report.gif" type="image/gif"/><title>Calculator.java</title><link rel="stylesheet" href="../../../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../../../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">CalculatorTest (Sep 10, 2019 2:55:41 PM)</a> &gt; <a href="../../index.html" class="el_group">calculator</a> &gt; <a href="../index.html" class="el_bundle">src/main/java</a> &gt; <a href="index.source.html" class="el_package">edu.unl.cse.csce361.calculator</a> &gt; <span class="el_source">Calculator.java</span></div><h1>Calculator.java</h1><pre class="source lang-java linenums">package edu.unl.cse.csce361.calculator;
+
+import java.io.IOException;
+import java.io.PushbackInputStream;
+import java.util.Arrays;
+
+public class Calculator {
+	public static final int MAXIMUM_STACK_DEPTH = 100;
+	public static final int MAXIMUM_TOKEN_LENGTH = 20;
+	public static final char NUMBER = '0';
+	public static final char DONE = 'q';
+	public static final char OPERAND_TOO_LONG = '9';
+
+	private PushbackInputStream stdin;
+
+	private int stackPointer;
+	private double[] stack;
+
+<span class="fc" id="L19">	public Calculator() {</span>
+<span class="fc" id="L20">		stackPointer = 0;</span>
+<span class="fc" id="L21">		stack = new double[MAXIMUM_STACK_DEPTH];</span>
+<span class="fc" id="L22">	}</span>
+
+	public static void main(String[] args) throws IOException {
+<span class="fc" id="L25">		new Calculator().run();</span>
+<span class="fc" id="L26">	}</span>
+
+	void run() throws IOException {
+<span class="fc" id="L29">		stdin = new PushbackInputStream(System.in);</span>
+		int type;
+<span class="fc" id="L31">		char[] token = new char[MAXIMUM_TOKEN_LENGTH];</span>
+		String message;
+
+<span class="fc" id="L34">		type = getToken(token, MAXIMUM_TOKEN_LENGTH);</span>
+<span class="fc bfc" id="L35" title="All 2 branches covered.">		while (type != DONE) {</span>
+<span class="fc" id="L36">			message = calculate(type, token);</span>
+<span class="fc bfc" id="L37" title="All 2 branches covered.">			if (message != null) {</span>
+<span class="fc" id="L38">				System.out.println(message);</span>
+			}
+<span class="fc" id="L40">			type = getToken(token, MAXIMUM_TOKEN_LENGTH);</span>
+		}
+<span class="fc" id="L42">	}</span>
+
+	String calculate(int type, char[] token) {
+		double number1;
+		double number2;
+		String message;
+<span class="fc bfc" id="L48" title="All 9 branches covered.">		switch (type) {</span>
+		case NUMBER:
+<span class="fc" id="L50">			number1 = Double.parseDouble(new String(token));</span>
+<span class="fc" id="L51">			push(number1);</span>
+<span class="fc" id="L52">			message = null;</span>
+<span class="fc" id="L53">			break;</span>
+		case '+':
+<span class="fc" id="L55">			number1 = pop();</span>
+<span class="fc" id="L56">			number2 = pop();</span>
+<span class="fc" id="L57">			push(number1 + number2);</span>
+<span class="fc" id="L58">			message = null;</span>
+<span class="fc" id="L59">			break;</span>
+		case '*':
+<span class="fc" id="L61">			number1 = pop();</span>
+<span class="fc" id="L62">			number2 = pop();</span>
+<span class="fc" id="L63">			push(number1 * number2);</span>
+<span class="fc" id="L64">			message = null;</span>
+<span class="fc" id="L65">			break;</span>
+		case '-':
+<span class="fc" id="L67">			number1 = pop();</span>
+<span class="fc" id="L68">			number2 = pop();</span>
+<span class="fc" id="L69">			push(number2 - number1);</span>
+<span class="fc" id="L70">			message = null;</span>
+<span class="fc" id="L71">			break;</span>
+		case '/':
+<span class="fc" id="L73">			number1 = pop();</span>
+<span class="fc bfc" id="L74" title="All 2 branches covered.">			if (number1 != 0.0) {</span>
+<span class="fc" id="L75">				number2 = pop();</span>
+<span class="fc" id="L76">				push(number2 / number1);</span>
+<span class="fc" id="L77">				message = null;</span>
+<span class="fc" id="L78">			} else {</span>
+<span class="fc" id="L79">				message = &quot;zero divisor popped&quot;;</span>
+			}
+<span class="fc" id="L81">			break;</span>
+		case '=':
+<span class="fc" id="L83">			number1 = pop();</span>
+<span class="fc" id="L84">			message = &quot;\t&quot; + number1;</span>
+<span class="fc" id="L85">			push(number1);</span>
+<span class="fc" id="L86">			break;</span>
+		case 'c':
+<span class="fc" id="L88">			clear();</span>
+<span class="fc" id="L89">			message = null;</span>
+<span class="fc" id="L90">			break;</span>
+		case OPERAND_TOO_LONG:
+<span class="fc" id="L92">			message = new String(Arrays.copyOfRange(token, 0, MAXIMUM_TOKEN_LENGTH - 1)) + &quot;... is too long&quot;;</span>
+<span class="fc" id="L93">			break;</span>
+		default:
+<span class="fc" id="L95">			message = &quot;unknown command &quot; + (char) type;</span>
+			break;
+		}
+<span class="fc" id="L98">		return message;</span>
+	}
+
+	private void push(double number) {
+<span class="fc bfc" id="L102" title="All 2 branches covered.">		if (stackPointer &lt; MAXIMUM_STACK_DEPTH) {</span>
+<span class="fc" id="L103">			stack[stackPointer++] = number;</span>
+<span class="fc" id="L104">		} else {</span>
+<span class="fc" id="L105">			System.out.println(&quot;error: stack full&quot;);</span>
+<span class="fc" id="L106">			clear();</span>
+		}
+<span class="fc" id="L108">	}</span>
+
+	private double pop() {
+		double number;
+
+<span class="fc bfc" id="L113" title="All 2 branches covered.">		if (stackPointer &gt; 0) {</span>
+<span class="fc" id="L114">			number = stack[--stackPointer];</span>
+<span class="fc" id="L115">		} else {</span>
+<span class="fc" id="L116">			System.out.println(&quot;error: stack empty&quot;);</span>
+<span class="fc" id="L117">			clear();</span>
+<span class="fc" id="L118">			number = 0;</span>
+		}
+<span class="fc" id="L120">		return number;</span>
+	}
+
+	private void clear() {
+<span class="fc" id="L124">		stackPointer = 0;</span>
+<span class="fc" id="L125">	}</span>
+
+	@SuppressWarnings(&quot;SameParameterValue&quot;)
+	private int getToken(char[] token, int limit) throws IOException {
+		int index, c, tokenType;
+
+<span class="fc" id="L131">		c = stdin.read();</span>
+<span class="fc bfc" id="L132" title="All 6 branches covered.">		while (c == ' ' || c == '\t' || c == '\n') {</span>
+<span class="fc" id="L133">			c = stdin.read();</span>
+		}
+
+<span class="fc bfc" id="L136" title="All 6 branches covered.">		if (c != '.' &amp;&amp; (c &lt; '0' || c &gt; '9')) {</span>
+<span class="fc" id="L137">			tokenType = c;</span>
+<span class="fc" id="L138">		} else {</span>
+<span class="fc" id="L139">			token[0] = (char) c;</span>
+
+<span class="fc" id="L141">			c = stdin.read();</span>
+<span class="fc" id="L142">			index = 1;</span>
+<span class="fc bfc" id="L143" title="All 4 branches covered.">			while (c &gt;= '0' &amp;&amp; c &lt;= '9') {</span>
+<span class="fc bfc" id="L144" title="All 2 branches covered.">				if (index &lt; limit) {</span>
+<span class="fc" id="L145">					token[index] = (char) c;</span>
+				}
+<span class="fc" id="L147">				c = stdin.read();</span>
+<span class="fc" id="L148">				index++;</span>
+			}
+<span class="fc bfc" id="L150" title="All 2 branches covered.">			if (c == '.') {</span>
+<span class="fc bfc" id="L151" title="All 2 branches covered.">				if (index &lt; limit) {</span>
+<span class="fc" id="L152">					token[index] = (char) c;</span>
+				}
+<span class="fc" id="L154">				index++;</span>
+<span class="fc" id="L155">				c = stdin.read();</span>
+<span class="fc bfc" id="L156" title="All 4 branches covered.">				while (c &gt;= '0' &amp;&amp; c &lt;= '9') {</span>
+<span class="fc bfc" id="L157" title="All 2 branches covered.">					if (index &lt; limit) {</span>
+<span class="fc" id="L158">						token[index] = (char) c;</span>
+					}
+<span class="fc" id="L160">					index++;</span>
+<span class="fc" id="L161">					c = stdin.read();</span>
+				}
+			}
+
+<span class="fc bfc" id="L165" title="All 2 branches covered.">			if (index &lt; limit) {</span>
+<span class="fc" id="L166">				stdin.unread(c);</span>
+<span class="fc bfc" id="L167" title="All 2 branches covered.">				while (index &lt; limit) { // to mimic the C-like behavior, we need to pump NULs into the string</span>
+<span class="fc" id="L168">					token[index] = '\0'; // otherwise, Double.parseDouble(new String(token)) will crash if</span>
+<span class="fc" id="L169">					index++; // if there are non-NUL characters after the first NUL</span>
+				}
+<span class="fc" id="L171">				tokenType = NUMBER;</span>
+<span class="fc" id="L172">			} else {</span>
+<span class="fc bfc" id="L173" title="All 4 branches covered.">				while (c != '\n' &amp;&amp; c != DONE) {</span>
+<span class="fc" id="L174">					c = stdin.read();</span>
+				}
+<span class="fc" id="L176">				token[limit - 1] = '\0'; // leave this here, intentionally, as a vestigial of C strings</span>
+<span class="fc" id="L177">				tokenType = OPERAND_TOO_LONG;</span>
+			}
+		}
+<span class="fc" id="L180">		return tokenType;</span>
+	}
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.2.201808211720</span>CalculatorTest (Sep 10, 2019 2:55:41 PM)</div></body></html>
