@@ -264,7 +264,7 @@ None needed
 ### Test 16
 ### PURPOSE
 
-Test invocation of the `calculate` class,  test if getToken function can correctly parse a incorrect number that a Integer number contains a character and 
+Test invocation of the `calculate` class,  test if getToken function can correctly parse an incorrect string that contains integers and characters 
 ### SETUP
 
 None needed
