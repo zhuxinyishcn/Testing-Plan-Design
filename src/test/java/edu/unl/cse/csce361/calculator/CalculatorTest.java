@@ -590,7 +590,6 @@ public class CalculatorTest {
 	 * 13. test getToken function can correctly parsing a 20+ long number which end
 	 * with "."
 	 */
-//	@Test(timeout = 500)
 	@Test
 	public void testLongNumberWithDot() throws IOException {
 		setFakeIn("1128753984759847430322. 2 * = q");

@@ -909,6 +909,170 @@ function setDocumentScrollTop(ypos)
  </tbody> 
 </table> 
 <h3> <a id="testing-requirements-covered-7" class="anchor" href="#testing-requirements-covered-7" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>TESTING REQUIREMENTS COVERED</h3> 
-<p>1, 8</p>
+<p>1, 8</p> 
+<h1> <a id="csce--361----whitebox-testing---pair" class="anchor" href="#csce--361----whitebox-testing---pair" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>CSCE -361 - Whitebox Testing - Pair</h1> 
+<p>Name as it appears on Canvas: <strong>Xinyi Zhu,</strong> <strong>Cody Berglund</strong><br /> GitLab User ID: <strong>1584, 1603</strong></p> 
+<h2> <a id="whitebox--test-requirement" class="anchor" href="#whitebox--test-requirement" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a><code>WhiteBox</code> Test Requirement</h2> 
+<p><code>100%</code> statement coverage on this calculator class</p> 
+<h3> <a id="test-9" class="anchor" href="#test-9" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Test 9</h3> 
+<h3> <a id="purpose-8" class="anchor" href="#purpose-8" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>PURPOSE</h3> 
+<p>Test invocation of the <code>calculate</code> class, test whether the loop terminates when the user types &quot;q&quot;</p> 
+<h3> <a id="setup-8" class="anchor" href="#setup-8" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>SETUP</h3> 
+<p>None needed</p> 
+<h3> <a id="inputs-and-expected-outputs-8" class="anchor" href="#inputs-and-expected-outputs-8" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>INPUTS and EXPECTED OUTPUTS</h3> 
+<table> 
+ <thead> 
+  <tr> 
+   <th align="left">input</th> 
+   <th align="center">expected output</th> 
+  </tr> 
+ </thead> 
+ <tbody> 
+  <tr> 
+   <td align="left"><code>q</code></td> 
+   <td align="center">The program terminates</td> 
+  </tr> 
+ </tbody> 
+</table> 
+<h3> <a id="test-10" class="anchor" href="#test-10" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Test 10</h3> 
+<h3> <a id="purpose-9" class="anchor" href="#purpose-9" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>PURPOSE</h3> 
+<p>Test invocation of the <code>calculate</code> class, test getToken function can correctly notice the whitespace, tab, and line change</p> 
+<h3> <a id="setup-9" class="anchor" href="#setup-9" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>SETUP</h3> 
+<p>None needed</p> 
+<h3> <a id="inputs-and-expected-outputs-9" class="anchor" href="#inputs-and-expected-outputs-9" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>INPUTS and EXPECTED OUTPUTS</h3> 
+<table> 
+ <thead> 
+  <tr> 
+   <th align="left">input</th> 
+   <th align="center">expected output</th> 
+  </tr> 
+ </thead> 
+ <tbody> 
+  <tr> 
+   <td align="left"><code>23\t89\t+\t=\tq</code></td> 
+   <td align="center">The program correctly accept the inputs</td> 
+  </tr> 
+  <tr> 
+   <td align="left"><code>23\n89\n+\n=\nq23\n89\n+\n=\nq</code></td> 
+   <td align="center">The program correctly accept the inputs</td> 
+  </tr> 
+  <tr> 
+   <td align="left"><code>23 89 + = q</code></td> 
+   <td align="center">The program correctly accept the inputs</td> 
+  </tr> 
+ </tbody> 
+</table> 
+<h3> <a id="test-11" class="anchor" href="#test-11" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Test 11</h3> 
+<h3> <a id="purpose-10" class="anchor" href="#purpose-10" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>PURPOSE</h3> 
+<p>Test invocation of the <code>calculate</code> class, getToken function can correctly notice the token is too long for integer and double number</p> 
+<h3> <a id="setup-10" class="anchor" href="#setup-10" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>SETUP</h3> 
+<p>None needed</p> 
+<h3> <a id="inputs-and-expected-outputs-10" class="anchor" href="#inputs-and-expected-outputs-10" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>INPUTS and EXPECTED OUTPUTS</h3> 
+<table> 
+ <thead> 
+  <tr> 
+   <th align="left">input</th> 
+   <th align="center">expected output</th> 
+  </tr> 
+ </thead> 
+ <tbody> 
+  <tr> 
+   <td align="left"><code>8753984759834743789724 2 * = \n q</code></td> 
+   <td align="center">8753984759834743789... is too long</td> 
+  </tr> 
+  <tr> 
+   <td align="left"><code>1.12875398475983474324 2 * = \n q</code></td> 
+   <td align="center">1.12875398475983474... is too long</td> 
+  </tr> 
+ </tbody> 
+</table> 
+<h3> <a id="test-12" class="anchor" href="#test-12" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Test 12</h3> 
+<h3> <a id="purpose-11" class="anchor" href="#purpose-11" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>PURPOSE</h3> 
+<p>Test invocation of the <code>calculate</code> class, test getToken function can correctly parsing a 20+ long number which end with <code>.</code>, and test getToken function can correctly parsing a incorrect that a double number has two <code>.</code></p> 
+<h3> <a id="setup-11" class="anchor" href="#setup-11" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>SETUP</h3> 
+<p>None needed</p> 
+<h3> <a id="inputs-and-expected-outputs-11" class="anchor" href="#inputs-and-expected-outputs-11" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>INPUTS and EXPECTED OUTPUTS</h3> 
+<table> 
+ <thead> 
+  <tr> 
+   <th align="left">input</th> 
+   <th align="center">expected output</th> 
+  </tr> 
+ </thead> 
+ <tbody> 
+  <tr> 
+   <td align="left"><code>1128753984759847430322. 2 * = q</code></td> 
+   <td align="center"><code>None</code></td> 
+  </tr> 
+  <tr> 
+   <td align="left"><code>1.243.3 2 + = \n q</code></td> 
+   <td align="center"><code>None</code></td> 
+  </tr> 
+ </tbody> 
+</table> 
+<h3> <a id="test-14" class="anchor" href="#test-14" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Test 14</h3> 
+<h3> <a id="purpose-12" class="anchor" href="#purpose-12" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>PURPOSE</h3> 
+<p>Test invocation of the <code>main</code> class, test if the main is correctly perform itself</p> 
+<h3> <a id="setup-12" class="anchor" href="#setup-12" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>SETUP</h3> 
+<p>None needed</p> 
+<h3> <a id="inputs-and-expected-outputs-12" class="anchor" href="#inputs-and-expected-outputs-12" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>INPUTS and EXPECTED OUTPUTS</h3> 
+<table> 
+ <thead> 
+  <tr> 
+   <th align="left">input</th> 
+   <th align="center">expected output</th> 
+  </tr> 
+ </thead> 
+ <tbody> 
+  <tr> 
+   <td align="left"><code>None</code></td> 
+   <td align="center"><code>None</code></td> 
+  </tr> 
+ </tbody> 
+</table> 
+<h3> <a id="test-15" class="anchor" href="#test-15" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Test 15</h3> 
+<h3> <a id="purpose-13" class="anchor" href="#purpose-13" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>PURPOSE</h3> 
+<p>Test invocation of the <code>main</code> class, test if the main is correctly perform itself</p> 
+<h3> <a id="setup-13" class="anchor" href="#setup-13" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>SETUP</h3> 
+<p>None needed</p> 
+<h3> <a id="inputs-and-expected-outputs-13" class="anchor" href="#inputs-and-expected-outputs-13" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>INPUTS and EXPECTED OUTPUTS</h3> 
+<table> 
+ <thead> 
+  <tr> 
+   <th align="left">input</th> 
+   <th align="center">expected output</th> 
+  </tr> 
+ </thead> 
+ <tbody> 
+  <tr> 
+   <td align="left"><code>None</code></td> 
+   <td align="center"><code>None</code></td> 
+  </tr> 
+ </tbody> 
+</table> 
+<h3> <a id="test-16" class="anchor" href="#test-16" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Test 16</h3> 
+<h3> <a id="purpose-14" class="anchor" href="#purpose-14" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>PURPOSE</h3> 
+<p>Test invocation of the <code>calculate</code> class, test if getToken function can correctly parsing a incorrect number that a Integer number contains a character and a double number contains a character</p> 
+<h3> <a id="setup-14" class="anchor" href="#setup-14" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>SETUP</h3> 
+<p>None needed</p> 
+<h3> <a id="inputs-and-expected-outputs-14" class="anchor" href="#inputs-and-expected-outputs-14" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>INPUTS and EXPECTED OUTPUTS</h3> 
+<table> 
+ <thead> 
+  <tr> 
+   <th align="left">input</th> 
+   <th align="center">expected output</th> 
+  </tr> 
+ </thead> 
+ <tbody> 
+  <tr> 
+   <td align="left"><code>123c4567890 2 + = q</code></td> 
+   <td align="center"><code>None</code></td> 
+  </tr> 
+  <tr> 
+   <td align="left"><code>12.3c4567890 2 + = q</code></td> 
+   <td align="center"><code>None</code></td> 
+  </tr> 
+ </tbody> 
+</table>
 </body>
 </html>
