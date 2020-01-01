@@ -1,4 +1,10 @@
-# CSCE -361 -  Blackbox Testing - Individual
+# Testing Plan Design
+Design and implement a test suite for existing software--Calculator
+in order to find any potential bug by using White and Black box Testing technique.
+## Test Report
+![report](./coverageReport/TestReport.PNG)
+
+## CSCE -361 -  Blackbox Testing 
 Name as it appears on Canvas: __Xinyi Zhu__  
 GitLab User ID: __1584__  
 ### `Calculator.calculate()` to compute answer
@@ -180,9 +186,9 @@ None needed
 ### TESTING REQUIREMENTS COVERED
 1, 8
 
-# CSCE -361 -  Whitebox Testing - Pair
-Name as it appears on Canvas: __Xinyi Zhu,__ __Cody Berglund__  
-GitLab User ID: __1584, 1603__ 
+## CSCE -361 -  Whitebox Testing 
+Name as it appears on Canvas: __Xinyi Zhu  
+GitLab User ID: __1584__ 
 ## `WhiteBox`  Test Requirement
 `100%` statement coverage on this calculator class
 ### Test 9
@@ -263,3 +269,4 @@ None needed
 | :-- |:---------------:| 
 | `123c4567890 2 + = q` | `None` | 
 | `12.3c4567890 2 + = q` | `None` | 
+
